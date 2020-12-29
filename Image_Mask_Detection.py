@@ -55,63 +55,48 @@ img_size = 224
 # input image path
 img_path = sys.argv[1]
 
-
 # Load image
 img = cv2.imread(img_path)
-
-# apply transformations to chosen image
-frame = apply_image_trans(img)
-
-# this is the output of the model
-Prediction = new_model.predict(frame)
-convert_sigmoid_output(Prediction)
-
 
 # focus on face inside of the frame
 faceCascade = cv2.CascadeClassifier(path)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-faces = faceCascade.detectMultiScale(gray, 1.1, 3)
+faces = faceCascade.detectMultiScale(gray, 1.1, 7)
 
 # loop through the face in the picture
 for x,y,w,h in faces:
     
     # Apply transformations
-    roi_gray = gray[y:y+h, x:x+w]
     roi_color = img[y:y+h, x:x+w]
-    cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
-    facess = faceCascade.detectMultiScale(roi_gray)
 
-    # check if any faces were found
-    if len(facess) != 0:
-        
-        # Cropping the face
-        for (ex, ey, ew, eh) in facess:
-            face_roi = roi_color[ey: ey+eh, ex: ex+ew]
-        
-        # obtain transformed face
-        final_image = apply_image_trans(face_roi)
+    # obtain transformed face
+    final_image = apply_image_trans(roi_color)
 
-        if(Prediction > 0.50):
+    # this is the output of the model
+    Prediction = new_model.predict(final_image)
+    convert_sigmoid_output(Prediction)        
 
-            # Set No Mask status
-            status = "No Mask"   
+    if(Prediction > 0.50):
 
-            # Add the text
-            cv2.putText(img, status, (x, y), font, font_scale, (0,0,255), 2)
+        # Set No Mask status
+        status = "No Mask"   
 
-            # Add the rectangle
-            cv2.rectangle(img, (x,y), (x+w, y+h), (0,0,255), 2)
+        # Add the text
+        cv2.putText(img, status, (x, y), font, font_scale, (0,0,255), 2)
 
-        else:
+        # Add the rectangle
+        cv2.rectangle(img, (x,y), (x + w, y + h), (0,0,255), 2)
 
-            # Set No Mask status
-            status = "Face Mask"
+    else:
 
-            # Add the text
-            cv2.putText(img, status, (x, y), font, font_scale, (255,0,0), 2)
+        # Set No Mask status
+        status = "Face Mask"
 
-            # Add the rectangle
-            cv2.rectangle(img, (x,y), (x+w, y+h), (255,0,0), 2)            
+        # Add the text
+        cv2.putText(img, status, (x, y), font, font_scale, (255,0,0), 2)
+
+        # Add the rectangle
+        cv2.rectangle(img, (x, y), (x + w, y + h), (255,0,0), 2)            
 
 
 
