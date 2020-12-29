@@ -28,11 +28,11 @@ Here are some examples of running the `Image_Mask_Detection` script on some test
 
 - Output of script from Test Image 2:
 
-![](/Mask_detection_Evidence_3.png)
+![](/Mask_detection_Evidence_2.png)
 
 - Test Image 3 passed into the script:
 
-![](/Test_Image_2.jpg)
+![](/Test_Image_3.jpg)
 
 - Output of script from Test Image 3:
 
