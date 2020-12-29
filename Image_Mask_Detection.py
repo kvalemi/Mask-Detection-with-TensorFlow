@@ -41,7 +41,7 @@ new_model = keras.models.load_model('./Mask_detection_Model.h5')
 ## some variables we will need for the Web Cam detection
 
 # font size of detection box
-font_scale = 1.5
+font_scale = 3
 
 # font type of detection text
 font = cv2.FONT_HERSHEY_PLAIN
@@ -72,7 +72,7 @@ faceCascade = cv2.CascadeClassifier(path)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 faces = faceCascade.detectMultiScale(gray, 1.1, 3)
 
-
+# loop through the face in the picture
 for x,y,w,h in faces:
     
     # Apply transformations
@@ -96,16 +96,24 @@ for x,y,w,h in faces:
             # Set No Mask status
             status = "No Mask"   
 
+            # Add the text
+            cv2.putText(img, status, (x, y), font, font_scale, (0,0,255), 2)
+
+            # Add the rectangle
+            cv2.rectangle(img, (x,y), (x+w, y+h), (0,0,255), 2)
+
         else:
 
             # Set No Mask status
             status = "Face Mask"
 
-        # Add the text
-        cv2.putText(img, status, (x, y), font, font_scale, (255,0,0), 3)
+            # Add the text
+            cv2.putText(img, status, (x, y), font, font_scale, (255,0,0), 2)
 
-        # Add the rectangle
-        cv2.rectangle(img, (x,y), (x+w, y+h), (255,0, 0), 3)
+            # Add the rectangle
+            cv2.rectangle(img, (x,y), (x+w, y+h), (255,0,0), 2)            
+
+
 
         # Save the frame and or picture
         # cv2.imwrite('./No_mask_evidence_face.png', (cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)))

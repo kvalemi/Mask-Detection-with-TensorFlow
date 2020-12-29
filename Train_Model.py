@@ -107,13 +107,14 @@ final_output = layers.Activation('sigmoid')(final_output)
 
 # Create the revised model
 new_model = keras.Model(inputs = base_input, outputs = final_output)
-# new_model.summary()
+new_model.summary()
 
 # Set up the model
 new_model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
 
 # Fit the model to the data
-new_model.fit(X, Y, epochs = 5, validation_split = 0.1)
+epochs = 5
+new_model.fit(X, Y, epochs = epochs, validation_split = 0.1)
 
 # Save Our Model
 new_model.save("Mask_detection_Model.h5")
