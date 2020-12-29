@@ -24,9 +24,9 @@ def apply_image_trans(img):
 
 # Function for interpreting the sigmoid output
 def convert_sigmoid_output(sigmoid):
-    if(sigmoid < 0):
+    if(sigmoid < 0.50):
         print('Mask Detected!')
-    elif(sigmoid > 0):
+    elif(sigmoid > 0.50):
         print('Mask not Detected!')
     else:
         print('Not Sure!')
@@ -57,10 +57,10 @@ img_path = sys.argv[1]
 
 
 # Load image
-frame = cv2.imread(img_path)
+img = cv2.imread(img_path)
 
 # apply transformations to chosen image
-frame = apply_image_trans(frame)
+frame = apply_image_trans(img)
 
 # this is the output of the model
 Prediction = new_model.predict(frame)
@@ -69,15 +69,16 @@ convert_sigmoid_output(Prediction)
 
 # focus on face inside of the frame
 faceCascade = cv2.CascadeClassifier(path)
-gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 faces = faceCascade.detectMultiScale(gray, 1.1, 3)
+
 
 for x,y,w,h in faces:
     
     # Apply transformations
     roi_gray = gray[y:y+h, x:x+w]
-    roi_color = frame[y:y+h, x:x+w]
-    cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+    roi_color = img[y:y+h, x:x+w]
+    cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
     facess = faceCascade.detectMultiScale(roi_gray)
 
     # check if any faces were found
@@ -96,27 +97,27 @@ for x,y,w,h in faces:
             status = "No Mask"
 
             # Add the text
-            cv2.putText(frame, status, (x, y), font, font_scale, (255,0,0), 3)
+            cv2.putText(img, status, (x, y), font, font_scale, (0,0,255), 3)
 
             # Add the rectangle
-            cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 3)
+            cv2.rectangle(img, (x,y), (x+w, y+h), (0,0, 255), 3)
 
             # Save the frame and or picture
             # cv2.imwrite('./No_mask_evidence_face.png', (cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)))
-            # cv2.imwrite('./No_mask_evidence_frame.png', (cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))        
+            # cv2.imwrite('./No_mask_evidence_frame.png', (cv2.cvtColor(img, cv2.COLOR_BGR2RGB)))        
 
-        else:
+        elif(Prediction < 0):
 
             # Set No Mask status
             status = "Face Mask"
 
             # Add the text
-            cv2.putText(frame, status, (x, y), font, font_scale, (0,0,255), 1)
+            cv2.putText(img, status, (x, y), font, font_scale, (255,0,0), 1)
 
             # Add the rectangle
-            cv2.rectangle(frame, (x,y), (x+w, y+h), (0,0,255), 1)
+            cv2.rectangle(img, (x,y), (x+w, y+h), (255,0,0), 1)
 
 
 # show image
 if len(faces) != 0:
-    cv2.imwrite('./No_mask_evidence_frame.png', (cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))        
+    cv2.imwrite('./Mask_detection_Evidence.png', (cv2.cvtColor(img, cv2.COLOR_BGR2RGB)))        

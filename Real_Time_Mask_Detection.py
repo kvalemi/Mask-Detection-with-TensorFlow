@@ -23,9 +23,9 @@ def apply_image_trans(img):
 
 # Function for interpreting the sigmoid output
 def convert_sigmoid_output(sigmoid):
-    if(sigmoid < 0):
+    if(sigmoid < 0.50):
         print('Mask Detected!')
-    elif(sigmoid > 0):
+    elif(sigmoid > 0.50):
         print('Mask not Detected!')
     else:
         print('Not Sure!')
