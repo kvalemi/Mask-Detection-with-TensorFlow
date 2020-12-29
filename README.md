@@ -50,10 +50,20 @@ If you would like to learn more about the project and the work I completed, plea
 - Ensure the folder structure follows the following schema in your repository:
 
 -> ./Dataset
+
 --> ./Dataset/Face_Mask
+
 --> ./Dataset/No_Mask
 
+3) Train the model by running the following command: `Python3 Train_Model.py`
 
+4) After the model is trained we can run the remaining pipeline scripts as such:
+
+- `Image_Mask_Detection`: `Python3 Image_Mask_Detection.py [Path to Image]`
+
+- `Real_Time_Mask_Detection`: `Python3 Real_Time_Mask_Detection.py`
+
+(I have configured the `Real_Time_Mask_Detection` script to use the front camera of the computer, if you would like to use for other cameras on your system, configude the line `VideoCapture(0)` according to the ID of your camera (i.e. 0 corresponds to the front camera of your system).
 
 
 ## Credits
