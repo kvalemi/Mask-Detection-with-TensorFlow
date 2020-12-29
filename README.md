@@ -45,7 +45,15 @@ If you would like to learn more about the project and the work I completed, plea
 - random
 - pickle
 
-2) Obtain a dataset that has example images of people wearing and not wearing face masks. I used a small images dataset
+2) Obtain a dataset that has example images of people wearing and not wearing face masks. I used a pretty small dataset (source foundin credits).
+
+- Ensure the folder structure follows the following schema in your repository:
+
+-> ./Dataset
+--> ./Dataset/Face_Mask
+--> ./Dataset/No_Mask
+
+
 
 
 ## Credits
