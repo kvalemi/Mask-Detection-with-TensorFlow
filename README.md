@@ -28,7 +28,15 @@ Here are some examples of running the `Image_Mask_Detection` script on some test
 
 - Output of script from Test Image 2:
 
-![](/Mask_detection_Evidence_2.png)
+![](/Mask_detection_Evidence_3.png)
+
+- Test Image 3 passed into the script:
+
+![](/Test_Image_2.jpg)
+
+- Output of script from Test Image 3:
+
+![](/Mask_detection_Evidence_3.png)
 
 
 **If you would like to learn more about the project and the work I completed, please first take a look at the Jupyter Notebook and then consider checking out the individual Python scripts.**
