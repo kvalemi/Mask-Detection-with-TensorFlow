@@ -88,31 +88,26 @@ while True:
             # convert_sigmoid_output(Prediction)
 
 
-            if(Prediction > 0):
+            if(Prediction > 0.50):
 
                 # Set No Mask status
-                status = "No Mask"
-
-                # Add the text
-                cv2.putText(frame, status, (x, y), font, font_scale, (255,0,0), 3)
-
-                # Add the rectangle
-                cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 3)
-
-                # Save the frame and or picture
-                # cv2.imwrite('./No_mask_evidence_face.png', (cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)))
-                # cv2.imwrite('./No_mask_evidence_frame.png', (cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))        
+                status = "No Mask"   
 
             else:
 
                 # Set No Mask status
                 status = "Face Mask"
 
-                # Add the text
-                cv2.putText(frame, status, (x, y), font, font_scale, (0,0,255), 1)
+            # Add the text
+            cv2.putText(img, status, (x, y), font, font_scale, (255,0,0), 3)
 
-                # Add the rectangle
-                cv2.rectangle(frame, (x,y), (x+w, y+h), (0,0,255), 1)
+            # Add the rectangle
+            cv2.rectangle(img, (x,y), (x+w, y+h), (255,0, 0), 3)
+
+            # Save the frame and or picture
+            # cv2.imwrite('./No_mask_evidence_face.png', (cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)))
+            # cv2.imwrite('./No_mask_evidence_frame.png', (cv2.cvtColor(img, cv2.COLOR_BGR2RGB)))
+
 
     # show image
     cv2.imshow('Face Mask Detection', frame)
